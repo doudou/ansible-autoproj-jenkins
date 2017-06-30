@@ -1,0 +1,3 @@
+Autoproj.isolate_environment
+Autobuild::Importer.default_cache_dirs = '/var/cache/rock'
+
