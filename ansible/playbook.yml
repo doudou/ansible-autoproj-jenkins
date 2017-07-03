@@ -69,6 +69,10 @@
         apt:
             name: git-lfs
             state: latest
+      - name: 'install dependency of the boost-to-XML test result conversion'
+        apt:
+            name: 'libsaxonb-java' 
+            state: latest
       - name: "copy the Jenkins configuration"
         notify: restart jenkins
         template:
