@@ -1,0 +1,3 @@
+Defaults env_keep += DEBIAN_FRONTEND
+
+%jenkins ALL=(ALL) NOPASSWD:/usr/bin/apt-get

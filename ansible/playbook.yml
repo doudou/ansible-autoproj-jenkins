@@ -73,6 +73,13 @@
         apt:
             name: 'libsaxonb-java' 
             state: latest
+      - name: "setup sudo to give access to apt-get to the jenkins user"
+        copy:
+            src: 'includes/sudo-jenkins-apt'
+            dest: '/etc/sudoers.d/jenkins-apt'
+            owner: root
+            group: root
+            mode: 0600
       - name: "copy the Jenkins configuration"
         notify: restart jenkins
         template:
