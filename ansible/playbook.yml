@@ -1,0 +1,80 @@
+---
+
+- hosts: all
+  vars:
+      jenkins_master_labels: "autoproj-jenkins"
+      jenkins_plugin_timeout: 120
+      jenkins_plugin_updates_expiration: 3600
+      jenkins_package_state: latest
+      jenkins_plugins:
+          - blueocean
+          - matrix-auth
+          - workflow-aggregator
+          - workflow-scm-step
+          - workflow-support
+          - workflow-cps
+          - workflow-job
+          - workflow-step-api
+          - pipeline-stage-step
+          - pipeline-stage-view
+          - script-security
+          - job-dsl
+          - git
+          - warnings
+          - ansicolor
+          - greenballs
+          - PrioritySorter
+          - embeddable-build-status
+          - pipeline-utility-steps
+          - copyartifact
+          - xunit
+          - dashboard-view
+          - purge-build-queue-plugin
+          - credentials-binding
+          - subversion
+
+  become: yes
+  roles:
+      - geerlingguy.jenkins
+  tasks:
+      - name: "install ruby"
+        apt:
+            name: ruby
+            state: latest
+      - name: "install build tool (autoproj-jenkins>jenkins>nokogiri,json,...)"
+        apt:
+            name: build-essential
+            state: latest
+      - name: "install ruby development files (autoproj-jenkins>jenkins>nokogiri)"
+        apt:
+            name: ruby-dev
+            state: latest
+      - name: "install zlib development files (autoproj-jenkins>jenkins>nokogiri)"
+        apt:
+            name: zlib1g-dev
+            state: latest
+      - name: "install git"
+        apt:
+            name: git
+            state: latest
+      - name: "add git-lfs repository key"
+        apt_key:
+            url: "https://packagecloud.io/github/git-lfs/gpgkey"
+            state: present
+      - name: "add git-lfs repository"
+        apt_repository:
+            repo: "deb https://packagecloud.io/github/git-lfs/ubuntu/ xenial main"
+            state: present
+      - name: "install git-lfs"
+        apt:
+            name: git-lfs
+            state: latest
+      - name: "copy the Jenkins configuration"
+        notify: restart jenkins
+        template:
+          src: includes/jenkins-config.xml
+          dest: /var/lib/jenkins/config.xml
+          owner: jenkins
+          group: jenkins
+          mode: 0644
+
