@@ -1,2 +1,8 @@
 ---
 # tasks file for doudou.autoproj-jenkins
+- name: inject autoproj-required jenkins plugins
+  set_fact:
+      jenkins_plugins: "{{ jenkins_plugins }} + {{ autoproj_required_jenkins_plugins }}"
+- name: run the jenkins role
+  roles:
+      - geerlingguy.jenkins
