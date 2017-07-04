@@ -1,9 +1,0 @@
-- name: "copy the Jenkins configuration"
-  notify: restart jenkins
-  template:
-    src: templates/var/lib/jenkins/config.xml
-    dest: /var/lib/jenkins/config.xml
-    owner: jenkins
-    group: jenkins
-    mode: 0644
-
