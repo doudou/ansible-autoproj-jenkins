@@ -1,31 +1,26 @@
 Role Name
 =========
 
-A brief description of the role goes here.
-
-Requirements
-------------
-
-Any pre-requisites that may not be covered by Ansible itself or the role should be mentioned here. For instance, if the role uses the EC2 module, it may be a good idea to mention in this section that the boto package is required.
+This role installs a Jenkins server and configures it to be readily usable with
+autoproj-jenkins. It assumes a Debian-based system (tested on Ubuntu 16.04),
+and installs the packages required by autoproj and autoproj-jenkins.
 
 Role Variables
 --------------
 
-A description of the settable variables for this role should go here, including any variables that are in defaults/main.yml, vars/main.yml, and any variables that can/should be set via parameters to the role. Any variables that are read from other roles and/or the global scope (ie. hostvars, group vars, etc.) should be mentioned here as well.
+In addition to [the variables that control the jenkins
+installation](https://github.com/geerlingguy/ansible-role-jenkins), this role
+adds the following variables:
+
+- `jenkins_master_labels`: the labels of the master executor. This defaults to
+  `autoproj-jenkins` which is the label the autoproj-created jobs are
+  restricted to.
 
 Dependencies
 ------------
 
-A list of other roles hosted on Galaxy should go here, plus any details in regards to parameters that may need to be set for other roles, or variables that are used from other roles.
-
-Example Playbook
-----------------
-
-Including an example of how to use your role (for instance, with variables passed in as parameters) is always nice for users too:
-
-    - hosts: servers
-      roles:
-         - { role: username.rolename, x: 42 }
+This role depends on
+[geerlingguy.jenkins](https://github.com/geerlingguy/ansible-role-jenkins). The role injects required plugins in the `jenkins_plugins` variable. You can freely set `jenkins_plugins` without disrupting this.
 
 License
 -------
