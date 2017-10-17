@@ -1,6 +1,7 @@
 ---
 # tasks file for doudou.autoproj-jenkins
 - name: "install autoproj-required jenkins plugins"
+  tags: 'install'
   include_role:
       allow_duplicates: true
       name: geerlingguy.jenkins
@@ -8,7 +9,9 @@
   vars:
       jenkins_plugins: "{{ autoproj_required_jenkins_plugins }}"
 - name: "setup sudo for autoproj under jenkins"
-  include: "sudo.yml"
+  tags: 'install'
+  import_tasks: "sudo.yml"
 - name: "install required supporting packages"
-  include: "packages.yml"
+  tags: 'install'
+  import_tasks: "packages.yml"
 
